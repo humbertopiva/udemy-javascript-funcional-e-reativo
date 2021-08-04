@@ -31,20 +31,25 @@ function lerArquivos(caminhos) {
     return Promise.all(caminhos.map(caminho => lerArquivo(caminho)))
 }
 
-function elementosTerminadosCom(arquivos, padraoTextual) {
+function elementosTerminadosCom(padraoTextual) {
 
-    return arquivos.filter(el => el.endsWith(padraoTextual));
+    return function(arquivos) {
+        
+        return arquivos.filter(el => el.endsWith(padraoTextual));
+    }
 }
 
-function removerSeVazio(array) {
+function removerElementosSeVazio(array) {
     return array.filter(el => el.trim())
 }
 
-function removerSeIncluir(array, padraoTextual) {
-    return array.filter(el => !el.includes(padraoTextual))
+function removerElementosSeIncluir(padraoTextual) {
+    return function(array) {
+        return array.filter(el => !el.includes(padraoTextual))
+    }
 }
 
-function removerSeApenasNumero(array) {
+function removerElementosSeApenasNumero(array) {
     return array.filter(el => {
         const num = parseFloat(el.trim())
 
@@ -57,7 +62,7 @@ module.exports = {
     lerArquivo,
     lerArquivos,
     elementosTerminadosCom,
-    removerSeVazio,
-    removerSeIncluir,
-    removerSeApenasNumero
+    removerElementosSeVazio,
+    removerElementosSeIncluir,
+    removerElementosSeApenasNumero
 }
