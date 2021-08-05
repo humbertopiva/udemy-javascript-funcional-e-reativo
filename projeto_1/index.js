@@ -1,7 +1,7 @@
 const path = require('path');
 const fn = require('./funcoes')
 
-const caminhoPasta = path.join(__dirname, '..', 'legendas');
+const caminhoPasta = path.join(__dirname, '..', 'dados');
 
 const simbolos = [
     '.', '?', '-', ',', '"', '♪',
