@@ -82,6 +82,14 @@ function separarTextoPor(simbolo) {
     }
 }
 
+function ordenarPorAtribNumerico(attr, ordem = 'asc') {
+    return function(array) {
+        const asc = (o1, o2) => o1[attr] - o2[attr]
+        const desc = (o1, o2) => o2[attr] - o1[attr]
+        return array.sort(ordem === 'asc' ? asc : desc)
+    }
+}
+
 module.exports = {
     lerDiretorio,
     lerArquivo,
@@ -92,5 +100,6 @@ module.exports = {
     removerElementosSeApenasNumero,
     removerSimbolos,
     mesclarElementos,
-    separarTextoPor
+    separarTextoPor,
+    ordenarPorAtribNumerico
 }

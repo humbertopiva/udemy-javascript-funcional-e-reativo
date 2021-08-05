@@ -20,6 +20,7 @@ function agruparPalavras(palavras) {
     }, {}))
 }
 
+
 fn.lerDiretorio(caminhoPasta)
     .then(fn.elementosTerminadosCom('.srt'))
     .then(fn.lerArquivos)
@@ -34,4 +35,5 @@ fn.lerDiretorio(caminhoPasta)
     .then(fn.removerElementosSeVazio)
     .then(fn.removerElementosSeApenasNumero)
     .then(agruparPalavras)
+    .then(fn.ordenarPorAtribNumerico('qtde', 'desc'))
     .then(console.log);
