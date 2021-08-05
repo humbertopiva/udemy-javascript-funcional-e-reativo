@@ -5,9 +5,9 @@ function lerDiretorio(caminho) {
 
     return new Promise((resolve, reject) => {
         try {
-            let arquivos = fs.readdirSync(caminho);
-            arquivos = arquivos.map(arquivo => path.join(caminho, arquivo))
-            resolve(arquivos);
+            const arquivos = fs.readdirSync(caminho);
+            const arquivosCompleto = arquivos.map(arquivo => path.join(caminho, arquivo))
+            resolve(arquivosCompleto);
         } catch(e) {
             reject(e)
         }
@@ -59,15 +59,12 @@ function removerElementosSeApenasNumero(array) {
 
 function removerSimbolos(simbolos) {
     return function(array) {
+
         return array.map(el => {
 
-            let textSemSimbolo = el;
-
-            simbolos.forEach(simbolo => {
-                textSemSimbolo = textSemSimbolo.split(simbolo).join('')
-            })
-
-            return textSemSimbolo;
+            return simbolos.reduce((acc, simbolo) => {
+                return acc.split(simbolo).join('')
+            }, el)
         })
     }
 }
