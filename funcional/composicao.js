@@ -1,7 +1,11 @@
 function composicao(...fns) {
     return function(valor) {
-        return fns.reduce((acc, fn) => {
-            return fn(acc)
+        return fns.reduce(async (acc, fn) => {
+            if(Promise.resolve(acc) === acc) {
+                return fn(await acc)
+            } else {
+                return fn(acc)
+            }
         }, valor)
     }
 }
@@ -15,7 +19,11 @@ function enfatizar(texto) {
 }
 
 function tornarLento(texto) {
-    return texto.split('').join(' ')
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve(texto.split('').join(' '))
+        },3000)
+    })
 }
 
 const exagerado = composicao(
@@ -29,8 +37,8 @@ const umPoucoMenosExagerado = composicao(
     enfatizar
 )
 
-const resultado1 = exagerado('para')
-const resultado2 = umPoucoMenosExagerado('cuidado com o buraco')
+exagerado('para')
+    .then(console.log)
 
-console.log(resultado1)
-console.log(resultado2)
+umPoucoMenosExagerado('cuidado com o buraco')
+    .then(console.log)
