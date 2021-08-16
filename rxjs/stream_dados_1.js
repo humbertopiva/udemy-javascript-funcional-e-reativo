@@ -14,7 +14,6 @@ function gerarNumeros() {
             }
         }
     }
-
 }
 
 const temp1 = gerarNumeros()
