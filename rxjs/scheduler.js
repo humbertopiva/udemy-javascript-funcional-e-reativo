@@ -1,5 +1,5 @@
 const {from, asyncScheduler} = require('rxjs')
-const { observeOn } = require('rxjs')
+const { observeOn } = require('rxjs/operators')
 
 console.log('Antes...')
 

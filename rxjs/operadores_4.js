@@ -17,20 +17,39 @@ function primeiro() {
 function ultimo() {
     return function(source) {
         return Observable.create(subscriber => {
-
+            let ultimo
             source.subscribe({
                 next(v) {
-                    subscriber.next(v + 2000)
+                    ultimo = v
+                },
+                complete() {
+                    if(ultimo !== undefined) {
+                        subscriber.next(ultimo)
+                    }
+                    
+                    subscriber.complete()
                 }
             })
         })
     }
 }
 
-// from([1, 2, 3, 4, 5])
-//     .pipe(primeiro())
-//     .subscribe(console.log)
+function nenhum() {
+    return function(source) {
+        return Observable.create(subscriber => {
+            source.subscribe({
+                next() {
+                    subscriber.complete()
+                }
+            })
+        })
+    }
+}
 
 from([1, 2, 3, 4, 5])
-    .pipe(ultimo())
+    .pipe(
+        // primeiro(),
+        // nenhum(),
+        ultimo()
+    )
     .subscribe(console.log)
