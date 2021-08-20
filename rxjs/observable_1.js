@@ -7,6 +7,7 @@ const promise = new Promise(resolve => {
 promise.then(console.log)
 
 const obs = new Observable (subscriber => {
+    console.log(subscriber)
     subscriber.next('Observer')
     subscriber.next('é')
     subscriber.next('bem')

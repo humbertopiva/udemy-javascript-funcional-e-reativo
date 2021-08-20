@@ -10,6 +10,5 @@ ajax({
         map(resp => JSON.parse(resp.xhr.responseText)),
         concatAll(),
         map(repo => repo.full_name)
-
     )
     .subscribe(console.log)
