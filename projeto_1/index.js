@@ -6,7 +6,7 @@ const caminhoPasta = path.join(__dirname, '..', 'dados');
 const simbolos = [
     '.', '?', '-', ',', '"', '♪',
     '_', '<i>', '</i>', '\r', '[', ']',
-    '(', ')'
+    '(', ')', '!'
 ]
 
 function agruparPalavras(palavras) {

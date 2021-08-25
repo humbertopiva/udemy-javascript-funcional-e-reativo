@@ -76,12 +76,6 @@ function removerElementosSeVazio() {
     }))
 }
 
-function removerElementosSeIncluir(padraoTextual) {
-    return function(array) {
-        return array.filter(el => !el.includes(padraoTextual))
-    }
-}
-
 function removerElementosSeApenasNumero() {
     return createPipeableOperator(subscriber => ({
         next(texto) {
@@ -94,15 +88,16 @@ function removerElementosSeApenasNumero() {
 }
 
 function removerSimbolos(simbolos) {
-    return function(array) {
 
-        return array.map(el => {
-
-            return simbolos.reduce((acc, simbolo) => {
+    return createPipeableOperator(subscriber => ({
+        next(texto) {
+            const textoSemSimbolo = simbolos.reduce((acc, simbolo) => {
                 return acc.split(simbolo).join('')
-            }, el)
-        })
-    }
+            }, texto)
+            
+            subscriber.next(textoSemSimbolo)
+        }
+    }))
 }
 
 function mesclarElementos() {
@@ -119,13 +114,28 @@ function mesclarElementos() {
     }))
 }
 
+function agruparElementos() {
+    
+    return createPipeableOperator(subscriber => ({
+        next(palavras) {
+            const agrupados = Object.values(palavras.reduce((acc, palavra) => {
+                const el = palavra.toLowerCase()
+                const qtde = acc[el] ? acc[el].qtde + 1: 1
+                acc[el] = { elemento: el, qtde}
+                return acc;
+            }, {}))
+
+            subscriber.next(agrupados)
+        }
+    }))
+}
+
 function separarTextoPor(simbolo) {
     return createPipeableOperator(subscriber => ({
         next(texto) {
             texto.split(simbolo).forEach(parte => {
                 subscriber.next(parte)
             })
-            subscriber.complete()
         }
     }))
 }
@@ -143,10 +153,10 @@ module.exports = {
     lerArquivo,
     elementosTerminadosCom,
     removerElementosSeVazio,
-    removerElementosSeIncluir,
     removerElementosSeApenasNumero,
     removerSimbolos,
     mesclarElementos,
     separarTextoPor,
+    agruparElementos,
     ordenarPorAtribNumerico
 }

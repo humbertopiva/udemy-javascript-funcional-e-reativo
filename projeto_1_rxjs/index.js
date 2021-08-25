@@ -1,26 +1,14 @@
 const path = require('path');
 const fn = require('./funcoes')
-const { map } = require('rxjs/operators')
+const {toArray} = require('rxjs/operators')
 
 const caminhoPasta = path.join(__dirname, '..', 'dados');
 
 const simbolos = [
     '.', '?', '-', ',', '"', '♪',
     '_', '<i>', '</i>', '\r', '[', ']',
-    '(', ')'
+    '(', ')', '!'
 ]
-
-function agruparPalavras(palavras) {
-    
-    return Object.values(palavras.reduce((acc, palavra) => {
-        const el = palavra.toLowerCase()
-        const qtde = acc[el] ? acc[el].qtde + 1: 1
-        acc[el] = { elemento: el, qtde}
-        return acc;
-
-    }, {}))
-}
-
 
 fn.lerDiretorio(caminhoPasta)
     .pipe(
@@ -28,7 +16,14 @@ fn.lerDiretorio(caminhoPasta)
         fn.lerArquivo(),
         fn.separarTextoPor('\n'),
         fn.removerElementosSeVazio(),
-        fn.removerElementosSeApenasNumero()
+        fn.removerElementosSeApenasNumero(),
+        fn.removerSimbolos(simbolos),
+        fn.separarTextoPor(' '),
+        fn.removerElementosSeVazio(),
+        fn.removerElementosSeApenasNumero(),
+        toArray(),
+        fn.agruparElementos()
+        
     )
     .subscribe(console.log)
  
