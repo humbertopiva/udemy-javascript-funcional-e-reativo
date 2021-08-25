@@ -66,8 +66,14 @@ function elementosTerminadosCom(padraoTextual) {
     }))
 }
 
-function removerElementosSeVazio(array) {
-    return array.filter(el => el.trim())
+function removerElementosSeVazio() {
+    return createPipeableOperator(subscriber => ({
+        next(texto) {
+            if(texto.trim()) {
+                subscriber.next(texto)
+            }
+        }
+    }))
 }
 
 function removerElementosSeIncluir(padraoTextual) {
@@ -97,14 +103,28 @@ function removerSimbolos(simbolos) {
 }
 
 function mesclarElementos() {
-    
-    return array.join(' ');
+
+    return createPipeableOperator(subscriber => ({
+        next(texto) {
+            try {
+                subscriber.next(texto.join(' '))
+                subscriber.complete()
+            } catch(e) {
+                subscriber.error(e)
+            }
+        }
+    }))
 }
 
 function separarTextoPor(simbolo) {
-    return function(texto) {
-        return texto.split(simbolo);
-    }
+    return createPipeableOperator(subscriber => ({
+        next(texto) {
+            texto.split(simbolo).forEach(parte => {
+                subscriber.next(parte)
+            })
+            subscriber.complete()
+        }
+    }))
 }
 
 function ordenarPorAtribNumerico(attr, ordem = 'asc') {

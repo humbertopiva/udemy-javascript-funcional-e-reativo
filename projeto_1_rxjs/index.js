@@ -25,7 +25,9 @@ function agruparPalavras(palavras) {
 fn.lerDiretorio(caminhoPasta)
     .pipe(
         fn.elementosTerminadosCom('.srt'),
-        fn.lerArquivo()
+        fn.lerArquivo(),
+        fn.separarTextoPor('\n'),
+        fn.removerElementosSeVazio()
     )
     .subscribe(console.log)
  
