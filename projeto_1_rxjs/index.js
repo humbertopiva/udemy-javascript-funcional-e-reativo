@@ -27,7 +27,8 @@ fn.lerDiretorio(caminhoPasta)
         fn.elementosTerminadosCom('.srt'),
         fn.lerArquivo(),
         fn.separarTextoPor('\n'),
-        fn.removerElementosSeVazio()
+        fn.removerElementosSeVazio(),
+        fn.removerElementosSeApenasNumero()
     )
     .subscribe(console.log)
  

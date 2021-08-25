@@ -82,12 +82,15 @@ function removerElementosSeIncluir(padraoTextual) {
     }
 }
 
-function removerElementosSeApenasNumero(array) {
-    return array.filter(el => {
-        const num = parseFloat(el.trim())
-
-        return num !== num;
-    })
+function removerElementosSeApenasNumero() {
+    return createPipeableOperator(subscriber => ({
+        next(texto) {
+            const num = parseInt(texto.trim())
+            if(num !== num) {
+                subscriber.next(texto)
+            }
+        }
+    }))
 }
 
 function removerSimbolos(simbolos) {
