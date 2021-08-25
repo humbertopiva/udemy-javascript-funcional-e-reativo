@@ -30,25 +30,12 @@ function lerDiretorio(caminho) {
     })
 }
 
-function lerArquivo(caminho) {
-    
-    return new Promise((resolve, reject) => {
-        try {
-            const conteudo = fs.readFileSync(caminho, {encoding: 'utf-8'})
-            resolve(conteudo.toString())
-        } catch(e) {
-            reject(e)
-        }
-    })
-}
-
 function lerArquivo() {
     return createPipeableOperator(subscriber => ({
             next(caminho) {
                 try {
                     const conteudo = fs.readFileSync(caminho, {encoding: 'utf-8'})
                     subscriber.next(conteudo.toString())
-                    subscriber.complete()
                 } catch(e) {
                     subscriber.error(e)
                 }
@@ -140,14 +127,6 @@ function separarTextoPor(simbolo) {
     }))
 }
 
-function ordenarPorAtribNumerico(attr, ordem = 'asc') {
-    return function(array) {
-        const asc = (o1, o2) => o1[attr] - o2[attr]
-        const desc = (o1, o2) => o2[attr] - o1[attr]
-        return [...array].sort(ordem === 'asc' ? asc : desc)
-    }
-}
-
 module.exports = {
     lerDiretorio,
     lerArquivo,
@@ -157,6 +136,5 @@ module.exports = {
     removerSimbolos,
     mesclarElementos,
     separarTextoPor,
-    agruparElementos,
-    ordenarPorAtribNumerico
+    agruparElementos
 }
