@@ -61,3 +61,10 @@ const AND = a => b =>  a(b)(F)
 
 r = AND(T)(T)
 r
+
+// OR
+
+const OR = a => b => a(T)(b)
+
+r = OR(T)(F)
+r
