@@ -37,3 +37,19 @@ r = ULT2(13)(20)
 r
 
 // boolean TRUE e FALSE
+// TRUE ? <PRI> : ULT
+// FALSE ? PRI : <ULT>
+
+const T = PRI
+const F = ULT
+
+T.inspect = () => 'Verdadeiro (PRI)'
+F.inspect = () => 'Falso (ULT)'
+
+T
+F
+
+const NOT = a => a(F)(T)
+
+r = NOT(F)
+r
