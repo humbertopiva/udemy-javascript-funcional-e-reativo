@@ -49,7 +49,15 @@ F.inspect = () => 'Falso (ULT)'
 T
 F
 
+// NOT
 const NOT = a => a(F)(T)
 
 r = NOT(F)
+r
+
+// AND
+
+const AND = a => b =>  a(b)(F)
+
+r = AND(T)(T)
 r
