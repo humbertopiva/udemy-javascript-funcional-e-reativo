@@ -84,3 +84,10 @@ r
 
 r = EQ(F)(T)
 r
+
+// XOR 
+
+const XOR = a => b => NOT(EQ(a)(b))
+
+r = XOR(T)(T)
+r
