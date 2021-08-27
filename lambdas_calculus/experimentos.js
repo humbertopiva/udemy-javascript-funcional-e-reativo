@@ -68,3 +68,19 @@ const OR = a => b => a(T)(b)
 
 r = OR(T)(F)
 r
+
+// EQ
+
+const EQ = a => b => a(b)(NOT(b))
+
+r = EQ(T)(T)
+r
+
+r = EQ(F)(F)
+r
+
+r = EQ(T)(F)
+r
+
+r = EQ(F)(T)
+r
